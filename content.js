@@ -120,16 +120,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-// Add a context menu item
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: 'fillLinks',
-    title: 'Fill application links',
-    contexts: ['page', 'selection'],
-  });
-});
-
-// Optional: Automatically try to fill fields when the page loads
+// Automatically try to fill fields when the page loads
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🌟 Page loaded, attempting to fill fields');
   chrome.storage.local.get(['github', 'linkedin', 'portfolio'], (links) => {
@@ -137,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Optional: Watch for dynamic form additions
+// Watch for dynamic form additions
 const observer = new MutationObserver((mutations) => {
   console.log('👀 Detected DOM changes, checking for new fields');
   chrome.storage.local.get(['github', 'linkedin', 'portfolio'], (links) => {
