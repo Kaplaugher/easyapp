@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="64" cy="64" r="60" fill="#0066cc" />
+
+    <!-- AF text -->
+    <text x="64" y="76" font-family="Arial, sans-serif" font-weight="bold" font-size="48" text-anchor="middle"
+        fill="white">AF</text>
+
+    <!-- Link symbol -->
+    <path d="M40,92 C36,92 32,90 29,87 L24,82 C17,75 17,64 24,57 L29,52 C32,49 36,47 40,47" stroke="white"
+        stroke-width="6" fill="none" stroke-linecap="round" />
+
+    <path d="M88,47 C92,47 96,49 99,52 L104,57 C111,64 111,75 104,82 L99,87 C96,90 92,92 88,92" stroke="white"
+        stroke-width="6" fill="none" stroke-linecap="round" />
+</svg>

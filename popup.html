@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Application Link Filler</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+    input {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+    }
+    button {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+    button:hover {
+      background-color: #0052a3;
+    }
+    .status {
+      font-size: 14px;
+      color: #22c55e;
+      margin-top: 8px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="margin-top: 0;">Application Links</h2>
+    <div class="input-group">
+      <label for="github">GitHub Profile URL</label>
+      <input type="url" id="github" placeholder="https://github.com/username">
+    </div>
+    <div class="input-group">
+      <label for="linkedin">LinkedIn Profile URL</label>
+      <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+    </div>
+    <div class="input-group">
+      <label for="portfolio">Portfolio Website URL</label>
+      <input type="url" id="portfolio" placeholder="https://yourportfolio.com">
+    </div>
+    <button id="save">Save Links</button>
+    <div id="status" class="status">Links saved successfully!</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 
