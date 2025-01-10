@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [
       'firstName',
       'lastName',
+      'email',
       'location',
       'phone',
       'github',
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Personal Information
       document.getElementById('firstName').value = result.firstName || '';
       document.getElementById('lastName').value = result.lastName || '';
+      document.getElementById('email').value = result.email || '';
       document.getElementById('location').value = result.location || '';
       document.getElementById('phone').value = result.phone || '';
 
@@ -38,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Personal Information
       firstName: document.getElementById('firstName').value.trim(),
       lastName: document.getElementById('lastName').value.trim(),
+      email: document.getElementById('email').value.trim(),
       location: document.getElementById('location').value.trim(),
       phone: document.getElementById('phone').value.trim(),
 
