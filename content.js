@@ -63,6 +63,36 @@ const FIELD_PATTERNS = {
   ],
 };
 
+// Helper function to check if an input is a select-like element
+function isSelectLikeInput(element) {
+  // Check for common select-related attributes
+  const selectAttributes = [
+    'role="combobox"',
+    'aria-haspopup="true"',
+    'aria-expanded',
+    'aria-autocomplete="list"',
+  ];
+
+  // Check for common select-related classes
+  const selectClassPatterns = [/select/i, /dropdown/i, /combobox/i];
+
+  // Check if element has select-like attributes
+  const hasSelectAttributes = selectAttributes.some((attr) => {
+    const [attrName, attrValue] = attr.split('=');
+    const elementValue = element.getAttribute(attrName.replace('="', ''));
+    return attrValue
+      ? elementValue === attrValue.replace(/"/g, '')
+      : elementValue !== null;
+  });
+
+  // Check if element has select-like classes
+  const hasSelectClasses =
+    element.className &&
+    selectClassPatterns.some((pattern) => pattern.test(element.className));
+
+  return hasSelectAttributes || hasSelectClasses;
+}
+
 // Helper function to check if an input field matches our patterns
 function matchesPattern(element, patterns) {
   console.debug('🔍 Checking element for patterns:', {
@@ -115,7 +145,7 @@ function findAndFillFields(info) {
     document.querySelectorAll(
       'input[type="text"], input[type="url"], input[type="tel"], input:not([type])'
     )
-  );
+  ).filter((input) => !isSelectLikeInput(input)); // Filter out select-like inputs
 
   console.log(`📋 Found ${inputs.length} potential input fields`);
 
