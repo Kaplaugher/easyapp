@@ -1,97 +1,176 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Application Link Filler</title>
+  <title>EasyFill</title>
   <style>
     body {
-      width: 400px;
-      padding: 16px;
+      width: 450px;
+      padding: 12px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+      min-height: 520px;
     }
-    .field {
+
+    h2 {
+      color: #2c3e50;
+      margin: 8px 0 16px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .section {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
       margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
+
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #6c757d;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .field {
+      margin-bottom: 8px;
+    }
+
+    .field.full-width {
+      grid-column: 1 / -1;
+    }
+
     label {
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       font-weight: 500;
+      color: #495057;
+      font-size: 13px;
     }
+
     input {
       width: 100%;
-      padding: 6px 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 6px 10px;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
       box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-size: 13px;
+      height: 32px;
     }
+
+    input:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 16px;
+    }
+
     button {
       background: #0066cc;
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
+      padding: 8px 20px;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+      font-size: 14px;
+      height: 36px;
     }
+
     button:hover {
       background: #0052a3;
     }
+
     .status {
       margin-top: 12px;
       padding: 8px;
-      border-radius: 4px;
+      border-radius: 6px;
       display: none;
+      text-align: center;
+      font-size: 13px;
     }
+
     .success {
-      background: #e6ffe6;
-      color: #006600;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
     }
   </style>
 </head>
 <body>
-  <h2>Application Link Filler</h2>
+  <h2>EasyFill</h2>
   
-  <div class="field">
-    <label for="firstName">First Name</label>
-    <input type="text" id="firstName" placeholder="Enter your first name">
-  </div>
-  
-  <div class="field">
-    <label for="lastName">Last Name</label>
-    <input type="text" id="lastName" placeholder="Enter your last name">
-  </div>
+  <div class="section">
+    <div class="section-title">Personal Information</div>
+    <div class="fields-grid">
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" placeholder="Enter your first name">
+      </div>
+      
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" placeholder="Enter your last name">
+      </div>
 
-  <div class="field">
-    <label for="email">Email</label>
-    <input type="email" id="email" placeholder="Enter your email">
+      <div class="field full-width">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+      </div>
+      
+      <div class="field">
+        <label for="location">Location</label>
+        <input type="text" id="location" placeholder="Enter your location">
+      </div>
+      
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number">
+      </div>
+    </div>
   </div>
   
-  <div class="field">
-    <label for="location">Location</label>
-    <input type="text" id="location" placeholder="Enter your location">
+  <div class="section">
+    <div class="section-title">Professional Links</div>
+    <div class="fields-grid">
+      <div class="field full-width">
+        <label for="github">GitHub Profile</label>
+        <input type="url" id="github" placeholder="Enter your GitHub profile URL">
+      </div>
+      
+      <div class="field full-width">
+        <label for="linkedin">LinkedIn Profile</label>
+        <input type="url" id="linkedin" placeholder="Enter your LinkedIn profile URL">
+      </div>
+      
+      <div class="field full-width">
+        <label for="portfolio">Portfolio Website</label>
+        <input type="url" id="portfolio" placeholder="Enter your portfolio website URL">
+      </div>
+    </div>
   </div>
   
-  <div class="field">
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" placeholder="Enter your phone number">
+  <div class="button-container">
+    <button id="save">Save Information</button>
   </div>
   
-  <div class="field">
-    <label for="github">GitHub Profile URL</label>
-    <input type="url" id="github" placeholder="Enter your GitHub profile URL">
-  </div>
-  
-  <div class="field">
-    <label for="linkedin">LinkedIn Profile URL</label>
-    <input type="url" id="linkedin" placeholder="Enter your LinkedIn profile URL">
-  </div>
-  
-  <div class="field">
-    <label for="portfolio">Portfolio Website URL</label>
-    <input type="url" id="portfolio" placeholder="Enter your portfolio website URL">
-  </div>
-  
-  <button id="save">Save Links</button>
-  
-  <div id="status" class="status success">Links saved successfully!</div>
+  <div id="status" class="status success">Information saved successfully!</div>
   
   <script src="popup.js"></script>
 </body>
