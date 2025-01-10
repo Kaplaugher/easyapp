@@ -146,13 +146,33 @@ function findAndFillFields(info) {
   }
 }
 
+// Function to safely access storage with fallback
+function safeGetStorage(keys, callback) {
+  try {
+    chrome.storage.local.get(keys, callback);
+  } catch (error) {
+    console.warn('⚠️ Storage access error:', error);
+    // Request data from background script instead
+    chrome.runtime.sendMessage(
+      { action: 'getStorageData', keys },
+      (response) => {
+        if (chrome.runtime.lastError) {
+          console.error('❌ Failed to get data:', chrome.runtime.lastError);
+          return;
+        }
+        callback(response.data);
+      }
+    );
+  }
+}
+
 // Listen for messages from the extension
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('📨 Received message:', request);
 
   if (request.action === 'fillLinks') {
     console.log('🎯 Processing fillLinks action');
-    chrome.storage.local.get(
+    safeGetStorage(
       [
         'firstName',
         'lastName',
@@ -175,7 +195,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // Automatically try to fill fields when the page loads
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🌟 Page loaded, attempting to fill fields');
-  chrome.storage.local.get(
+  safeGetStorage(
     [
       'firstName',
       'lastName',
@@ -194,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Watch for dynamic form additions
 const observer = new MutationObserver((mutations) => {
   console.log('👀 Detected DOM changes, checking for new fields');
-  chrome.storage.local.get(
+  safeGetStorage(
     [
       'firstName',
       'lastName',
