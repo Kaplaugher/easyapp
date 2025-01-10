@@ -1,5 +1,36 @@
-// Common keywords for each type of link
+// Common keywords for each type of field
 const FIELD_PATTERNS = {
+  // Personal Information
+  firstName: [
+    /first[\s-]?name/i,
+    /given[\s-]?name/i,
+    /^first$/i,
+    /^fname$/i,
+    /^givenname$/i,
+  ],
+  lastName: [
+    /last[\s-]?name/i,
+    /family[\s-]?name/i,
+    /surname/i,
+    /^last$/i,
+    /^lname$/i,
+  ],
+  fullName: [
+    /^name$/i,
+    /full[\s-]?name/i,
+    /your[\s-]?name/i,
+    /complete[\s-]?name/i,
+  ],
+  location: [
+    /location/i,
+    /city/i,
+    /state/i,
+    /address/i,
+    /where.*located/i,
+    /where.*based/i,
+  ],
+  phone: [/phone/i, /telephone/i, /mobile/i, /cell/i, /contact.*number/i],
+  // Professional Links
   github: [
     /github/i,
     /git(\s|-)?hub/i,
@@ -69,13 +100,13 @@ function matchesPattern(element, patterns) {
 }
 
 // Function to find and fill input fields
-function findAndFillFields(links) {
-  console.log('🔎 Starting to search for fields to fill...', links);
+function findAndFillFields(info) {
+  console.log('🔎 Starting to search for fields to fill...', info);
 
-  // Get all input fields that could potentially be link inputs
+  // Get all input fields that could potentially be inputs
   const inputs = Array.from(
     document.querySelectorAll(
-      'input[type="text"], input[type="url"], input:not([type])'
+      'input[type="text"], input[type="url"], input[type="tel"], input:not([type])'
     )
   );
 
@@ -88,17 +119,27 @@ function findAndFillFields(links) {
       continue;
     }
 
-    // Check each type of link
+    // Check each type of field
     for (const [type, patterns] of Object.entries(FIELD_PATTERNS)) {
-      if (matchesPattern(input, patterns) && links[type]) {
+      if (matchesPattern(input, patterns)) {
         console.log(`✨ Found match for ${type}:`, input);
-        console.log(`💾 Filling with value: ${links[type]}`);
 
-        input.value = links[type];
-        // Trigger input event to notify the form of changes
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-        console.log(`✅ Successfully filled ${type} field`);
+        let valueToFill = info[type];
+
+        // Special handling for full name
+        if (type === 'fullName' && info.firstName && info.lastName) {
+          valueToFill = `${info.firstName} ${info.lastName}`;
+          console.log('👥 Combining first and last name:', valueToFill);
+        }
+
+        if (valueToFill) {
+          console.log(`💾 Filling with value: ${valueToFill}`);
+          input.value = valueToFill;
+          // Trigger input event to notify the form of changes
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log(`✅ Successfully filled ${type} field`);
+        }
         break;
       }
     }
@@ -111,11 +152,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   if (request.action === 'fillLinks') {
     console.log('🎯 Processing fillLinks action');
-    chrome.storage.local.get(['github', 'linkedin', 'portfolio'], (links) => {
-      console.log('📦 Retrieved stored links:', links);
-      findAndFillFields(links);
-      sendResponse({ success: true });
-    });
+    chrome.storage.local.get(
+      [
+        'firstName',
+        'lastName',
+        'location',
+        'phone',
+        'github',
+        'linkedin',
+        'portfolio',
+      ],
+      (info) => {
+        console.log('📦 Retrieved stored information:', info);
+        findAndFillFields(info);
+        sendResponse({ success: true });
+      }
+    );
     return true; // Required for async response
   }
 });
@@ -123,23 +175,45 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // Automatically try to fill fields when the page loads
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🌟 Page loaded, attempting to fill fields');
-  chrome.storage.local.get(['github', 'linkedin', 'portfolio'], (links) => {
-    findAndFillFields(links);
-  });
+  chrome.storage.local.get(
+    [
+      'firstName',
+      'lastName',
+      'location',
+      'phone',
+      'github',
+      'linkedin',
+      'portfolio',
+    ],
+    (info) => {
+      findAndFillFields(info);
+    }
+  );
 });
 
 // Watch for dynamic form additions
 const observer = new MutationObserver((mutations) => {
   console.log('👀 Detected DOM changes, checking for new fields');
-  chrome.storage.local.get(['github', 'linkedin', 'portfolio'], (links) => {
-    for (const mutation of mutations) {
-      if (mutation.addedNodes.length) {
-        console.log('🆕 New nodes added to DOM, attempting to fill fields');
-        findAndFillFields(links);
-        break;
+  chrome.storage.local.get(
+    [
+      'firstName',
+      'lastName',
+      'location',
+      'phone',
+      'github',
+      'linkedin',
+      'portfolio',
+    ],
+    (info) => {
+      for (const mutation of mutations) {
+        if (mutation.addedNodes.length) {
+          console.log('🆕 New nodes added to DOM, attempting to fill fields');
+          findAndFillFields(info);
+          break;
+        }
       }
     }
-  });
+  );
 });
 
 observer.observe(document.body, {

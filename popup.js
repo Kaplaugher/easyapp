@@ -1,31 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🎨 Popup opened');
 
-  // Load saved links when popup opens
-  chrome.storage.local.get(['github', 'linkedin', 'portfolio'], (result) => {
-    console.log('📂 Loading saved links:', result);
+  // Load saved information when popup opens
+  chrome.storage.local.get(
+    [
+      'firstName',
+      'lastName',
+      'location',
+      'phone',
+      'github',
+      'linkedin',
+      'portfolio',
+    ],
+    (result) => {
+      console.log('📂 Loading saved information:', result);
 
-    document.getElementById('github').value = result.github || '';
-    document.getElementById('linkedin').value = result.linkedin || '';
-    document.getElementById('portfolio').value = result.portfolio || '';
+      // Personal Information
+      document.getElementById('firstName').value = result.firstName || '';
+      document.getElementById('lastName').value = result.lastName || '';
+      document.getElementById('location').value = result.location || '';
+      document.getElementById('phone').value = result.phone || '';
 
-    console.log('✅ Populated form fields with saved values');
-  });
+      // Professional Links
+      document.getElementById('github').value = result.github || '';
+      document.getElementById('linkedin').value = result.linkedin || '';
+      document.getElementById('portfolio').value = result.portfolio || '';
 
-  // Save links when save button is clicked
+      console.log('✅ Populated form fields with saved values');
+    }
+  );
+
+  // Save information when save button is clicked
   document.getElementById('save').addEventListener('click', () => {
     console.log('💾 Save button clicked');
 
-    const links = {
+    const info = {
+      // Personal Information
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName: document.getElementById('lastName').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+
+      // Professional Links
       github: document.getElementById('github').value.trim(),
       linkedin: document.getElementById('linkedin').value.trim(),
       portfolio: document.getElementById('portfolio').value.trim(),
     };
 
-    console.log('📝 Saving links:', links);
+    console.log('📝 Saving information:', info);
 
-    chrome.storage.local.set(links, () => {
-      console.log('✅ Links saved successfully');
+    chrome.storage.local.set(info, () => {
+      console.log('✅ Information saved successfully');
 
       const status = document.getElementById('status');
       status.style.display = 'block';

@@ -4,7 +4,7 @@
   <title>Application Link Filler</title>
   <style>
     body {
-      width: 300px;
+      width: 350px;
       padding: 16px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
@@ -13,10 +13,22 @@
       flex-direction: column;
       gap: 12px;
     }
+    .section {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
     .input-group {
       display: flex;
       flex-direction: column;
       gap: 4px;
+    }
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+    .row .input-group {
+      flex: 1;
     }
     label {
       font-size: 14px;
@@ -55,25 +67,57 @@
       text-align: center;
       display: none;
     }
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2 style="margin-top: 0;">Application Links</h2>
-    <div class="input-group">
-      <label for="github">GitHub Profile URL</label>
-      <input type="url" id="github" placeholder="https://github.com/username">
+    <h2 style="margin-top: 0;">Application Autofill</h2>
+    
+    <div class="section">
+      <h3>Personal Information</h3>
+      <div class="row">
+        <div class="input-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" placeholder="John">
+        </div>
+        <div class="input-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" placeholder="Doe">
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" placeholder="City, State">
+      </div>
+      <div class="input-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="(123) 456-7890">
+      </div>
     </div>
-    <div class="input-group">
-      <label for="linkedin">LinkedIn Profile URL</label>
-      <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+
+    <div class="section">
+      <h3>Professional Links</h3>
+      <div class="input-group">
+        <label for="github">GitHub Profile URL</label>
+        <input type="url" id="github" placeholder="https://github.com/username">
+      </div>
+      <div class="input-group">
+        <label for="linkedin">LinkedIn Profile URL</label>
+        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+      </div>
+      <div class="input-group">
+        <label for="portfolio">Portfolio Website URL</label>
+        <input type="url" id="portfolio" placeholder="https://yourportfolio.com">
+      </div>
     </div>
-    <div class="input-group">
-      <label for="portfolio">Portfolio Website URL</label>
-      <input type="url" id="portfolio" placeholder="https://yourportfolio.com">
-    </div>
-    <button id="save">Save Links</button>
-    <div id="status" class="status">Links saved successfully!</div>
+
+    <button id="save">Save Information</button>
+    <div id="status" class="status">Information saved successfully!</div>
   </div>
   <script src="popup.js"></script>
 </body>
