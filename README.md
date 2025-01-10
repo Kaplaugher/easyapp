@@ -1,8 +1,8 @@
-# Application Link Filler Chrome Extension
+# EasyFill Chrome Extension
 
 ## Purpose
 
-The Application Link Filler is a Chrome extension designed to streamline the job application process by automatically filling in your professional profile links (GitHub, LinkedIn, and Portfolio) across various job application forms. It solves the common problem of repeatedly entering the same URLs during job applications, saving time and reducing errors.
+The EasyFill is a Chrome extension designed to streamline the job application process by automatically filling in your professional profile links (GitHub, LinkedIn, and Portfolio) across various job application forms. It solves the common problem of repeatedly entering the same URLs during job applications, saving time and reducing errors.
 
 ## Features
 
